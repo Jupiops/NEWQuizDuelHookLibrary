@@ -1,0 +1,2 @@
+C:\Users\Jupio\AppData\Local\Android\Sdk\ndk\16.1.4479499
+C:\Users\Jupio\CLionProjects\NEWQuizDuelHookLibrary
