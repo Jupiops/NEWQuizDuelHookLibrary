@@ -1,7 +1,7 @@
 #include <jni.h>
 #include <android/log.h>
-#include "libs/KittyMemory/MemoryPatch.h"
-#include "libs/64InlineHook/And64InlineHook.hpp"
+#include <libs/KittyMemory/MemoryPatch.h>
+#include <libs/64InlineHook/And64InlineHook.hpp>
 #include <memory.h>
 #include <dlfcn.h>
 #include <cstdio>
@@ -17,13 +17,13 @@
 //#define  LOGI(...)  __android_log_print(ANDROID_LOG_INFO,LOG_TAG,__VA_ARGS__)
 
 struct Il2CppObject {
-    void *klass;
-    void *monitor;
+    __unused void *klass;
+    __unused void *monitor;
 };
 
 // System.String
 struct Il2CppString {
-    Il2CppObject object;
+    __unused Il2CppObject object;
     int32_t length; // 0x10 < Length of string *excluding* the trailing null (which is included in 'chars').
     char16_t data[1]; // 0x14
 
@@ -32,8 +32,7 @@ struct Il2CppString {
     typedef Il2CppString *Il2CppString_Concat(Il2CppString *str0, Il2CppString *str1);
 
     static Il2CppString *New(const char *str) {
-        return findFunction<Il2CppString_CreateString>(Offsets::Methods::String_Create)(nullptr,
-                                                                                        str);
+        return findFunction<Il2CppString_CreateString>(Offsets::Methods::String_CreateString)(nullptr, str);
     }
 
     static Il2CppString *Concat(Il2CppString *str0, Il2CppString *str1) {
@@ -41,26 +40,30 @@ struct Il2CppString {
     }
 };
 
-float (*old_Player_getSkillCooldown)(void *instance);
+void (*old_QuestionAnswerButton_Init)(void *this_, int32_t answerIndex, Il2CppString *text,
+                                      void *onClick, const void *method);
 
-float (Player_getSkillCooldown)(void *instance) {
-    if (instance != NULL) {
-        return 0;
+void QuestionAnswerButton_Init(void *this_, int32_t answerIndex, Il2CppString *text, void *onClick,
+                               const void *method) {
+    if (answerIndex == 0) {
+        text = Il2CppString::Concat(text, Il2CppString::New(" ✔"));
     }
-    return old_Player_getSkillCooldown(instance);
+    old_QuestionAnswerButton_Init(this_, answerIndex, text, onClick, method);
 }
 
-int (*old_Player_getWeaponDamage)(void *instance);
+float (*old_QuestionContainerClassic_GetTimerDuration)(void *this_, const void *method);
 
-int Player_getWeaponDamage(void *instance) {
-    if (instance != NULL) {
-        return 1000000;
-    }
-    return old_Player_getWeaponDamage(instance);
+float QuestionContainerClassic_GetTimerDuration(__unused void *this_, __unused const void *method) {
+    return 60;
 }
 
-__attribute__((constructor))
-void libhook_main() {
+bool (*old_VIPManager_HasVIPProperty)(int32_t property, const void *method);
+
+bool VIPManager_HasVIPProperty(__unused int32_t property, __unused const void *method) {
+    return true;
+}
+
+void *libhook_main(void *) {
 
     LOGD("Initialize hooking");
 
@@ -69,13 +72,38 @@ void libhook_main() {
         sleep(1);
     }
 
+    Offsets::Initialize();
+
     LOGD("Apply hooks");
 
-    //arm64 hook example.
-    A64HookFunction((void *) getRealOffset(0x89552A), (void *) Player_getSkillCooldown,
-                    (void **) &old_Player_getSkillCooldown);
-    A64HookFunction((void *) getRealOffset(0x89556C), (void *) Player_getWeaponDamage,
-                    (void **) &old_Player_getWeaponDamage);
+    A64HookFunction((void *) getRealOffset(Offsets::Methods::QuestionAnswerButton_Init),
+                    (void *) QuestionAnswerButton_Init,
+                    (void **) &old_QuestionAnswerButton_Init);
+
+    A64HookFunction(
+            (void *) getRealOffset(Offsets::Methods::QuestionContainerClassic_GetTimerDuration),
+            (void *) QuestionContainerClassic_GetTimerDuration,
+            (void **) &old_QuestionContainerClassic_GetTimerDuration);
+
+    A64HookFunction((void *) getRealOffset(Offsets::Methods::VIPManager_HasVIPProperty),
+                    (void *) VIPManager_HasVIPProperty,
+                    (void **) &old_VIPManager_HasVIPProperty);
 
     LOGD("Done, the game should now behave abnormally");
+    return nullptr;
 }
+
+JNIEXPORT jint JNICALL
+JNI_OnLoad(JavaVM *vm, __unused void *reserved) {
+    JNIEnv *globalEnv;
+    vm->GetEnv((void **) &globalEnv, JNI_VERSION_1_6);
+
+    // Create a new thread so it does not block the main thread, means the game would not freeze
+    pthread_t ptid;
+    pthread_create(&ptid, nullptr, libhook_main, nullptr);
+
+    return JNI_VERSION_1_6;
+}
+
+JNIEXPORT void JNICALL
+JNI_OnUnload(__unused JavaVM *vm, __unused void *reserved) {}

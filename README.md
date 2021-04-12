@@ -9,6 +9,8 @@ from [Djangø](https://github.com/Djngo)
 Hooks into the [NEW QuizDuel!](https://play.google.com/store/apps/details?id=se.maginteractive.quizduel2) android
 application and applies some nice features
 
+Current Version of the offsets: ```android:versionCode="114080151" android:versionName="1.14.8"```
+
 ## Loading the libhook.so
 
 First we need to compile our project.
@@ -22,7 +24,7 @@ First we need to compile our project.
 * Navigate to "<b>/smali_classes3</b>" & copy the loadLib from this git inside of that folder.
 * Open the AndroidManifest.xml file in the decompiled apk and search this
 
-```xml
+```
 android:name="android.intent.action.MAIN"
 ```
 
