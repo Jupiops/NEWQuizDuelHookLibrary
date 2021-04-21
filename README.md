@@ -1,15 +1,19 @@
-# NEW QuizDuel! Hook library
+NEW QuizDuel! Hook library
+======
 
 based on the [template](https://github.com/Djngo/Hooking-and-Patching-android-template)
 from [Djangø](https://github.com/Djngo)
----
 
 **Disclaimer: For educational purposes only**
 
 Hooks into the [NEW QuizDuel!](https://play.google.com/store/apps/details?id=se.maginteractive.quizduel2) android
-application and applies some nice features
+application using Cydia Substrate and KittyMemory and applies some nice features like a :heavy_check_mark: to the correct answer
 
-Current Version of the offsets: ```android:versionCode="114080151" android:versionName="1.14.8"```
+Current Version of the offsets: `android:versionCode="114080151" android:versionName="1.14.8"`
+
+## Installation
+* Download this github files and unzip it.
+* Download Android NDK, Revision 16b from [here](https://developer.android.com/ndk/downloads/older_releases) or using [Android Studio](https://developer.android.com/studio/projects/install-ndk)
 
 ## Loading the libhook.so
 
@@ -20,8 +24,8 @@ First we need to compile our project.
 * Start Build.bat and follow instructions.
 * Once compiled you'll have 2 new file in x32 and x64 named **libs** and **obj**. In order to load your <b>
   libhook.so</b>, you'll need to decompile the apk, you can use Apk Easy Tool for this.
-* Go to *libs* and copy the created libhook.so in the *lib* folder of your game.
-* Navigate to "<b>/smali_classes3</b>" & copy the loadLib from this git inside of that folder.
+* Go to *libs* and copy the created libhook.so in the *lib* folder of your decompiled game.
+* Navigate to "<b>/smali_classes3</b>" & copy the *com* folder inside the *Smali Files* filder from this git to that folder.
 * Open the AndroidManifest.xml file in the decompiled apk and search this
 
 ```
