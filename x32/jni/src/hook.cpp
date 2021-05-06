@@ -33,8 +33,7 @@ struct Il2CppString {
     typedef Il2CppString *Il2CppString_Concat(Il2CppString *str0, Il2CppString *str1);
 
     static Il2CppString *New(const char *str) {
-        return findFunction<Il2CppString_CreateString>(Offsets::Methods::String_CreateString)(
-                nullptr, str);
+        return findFunction<Il2CppString_CreateString>(Offsets::Methods::String_CreateString)(nullptr, str);
     }
 
     static Il2CppString *Concat(Il2CppString *str0, Il2CppString *str1) {
@@ -42,11 +41,11 @@ struct Il2CppString {
     }
 };
 
-void (*old_QuestionAnswerButton_Init)(void *this_, int32_t answerIndex, Il2CppString *text,
-                                      void *onClick, const void *method);
+void (*old_QuestionAnswerButton_Init)(void *this_, int32_t answerIndex, Il2CppString *text, void *onClick,
+                                      const void *method);
 
-void QuestionAnswerButton_Init(void *this_, int32_t answerIndex, Il2CppString *text, void *onClick,
-                               const void *method) {
+void
+QuestionAnswerButton_Init(void *this_, int32_t answerIndex, Il2CppString *text, void *onClick, const void *method) {
     if (answerIndex == 0) {
         text = Il2CppString::Concat(text, Il2CppString::New(" ✔"));
     }
@@ -74,7 +73,7 @@ void *libhook_main(void *) {
     do {
         il2cppMap = KittyMemory::getLibraryMap(libName);
         sleep(1);
-    } while (!il2cppMap.isValid());
+    } while (!il2cppMap.isValid());;
 
     libBase = (DWORD) il2cppMap.startAddr;
     libEnd = (DWORD) il2cppMap.endAddr;
@@ -107,9 +106,7 @@ void *libhook_main(void *) {
     return nullptr;
 }
 
-JNIEXPORT jint
-
-JNICALL
+JNIEXPORT jint JNICALL
 JNI_OnLoad(JavaVM *vm, __unused void *reserved) {
     JNIEnv *globalEnv;
     vm->GetEnv((void **) &globalEnv, JNI_VERSION_1_6);
@@ -122,8 +119,4 @@ JNI_OnLoad(JavaVM *vm, __unused void *reserved) {
 }
 
 JNIEXPORT void JNICALL
-JNI_OnUnload(__unused
-JavaVM *vm, __unused
-void *reserved
-) {
-}
+JNI_OnUnload(__unused JavaVM *vm, __unused void *reserved) {}
