@@ -23,7 +23,8 @@ struct Il2CppObject {
 
 // System.String
 struct Il2CppString {
-    __unused Il2CppObject object;
+    __unused Il2CppObject
+    object;
     int32_t length; // 0x10 < Length of string *excluding* the trailing null (which is included in 'chars').
     char16_t data[1]; // 0x14
 
@@ -75,6 +76,13 @@ void *libhook_main(void *) {
 
     Offsets::Initialize();
 
+    LOGD("QuestionAnswerButton.Init Offset: %p", (void *) Offsets::Methods::QuestionAnswerButton_Init);
+    LOGD("QuestionContainerClassic.GetTimerDuration Offset: %p",
+         (void *) Offsets::Methods::QuestionContainerClassic_GetTimerDuration);
+    LOGD("VIPManager.HasVIPProperty Offset: %p", (void *) Offsets::Methods::VIPManager_HasVIPProperty);
+    LOGD("string.CreateString Offset: %p", (void *) Offsets::Methods::String_CreateString);
+    LOGD("string.Concat Offset: %p", (void *) Offsets::Methods::String_Concat);
+
     LOGD("Apply hooks");
 
     MSHookFunction((void *) getRealOffset(Offsets::Methods::QuestionAnswerButton_Init),
@@ -86,15 +94,17 @@ void *libhook_main(void *) {
             (void *) QuestionContainerClassic_GetTimerDuration,
             (void **) &old_QuestionContainerClassic_GetTimerDuration);
 
-    MSHookFunction((void *) getRealOffset(Offsets::Methods::VIPManager_HasVIPProperty),
-                   (void *) VIPManager_HasVIPProperty,
-                   (void **) &old_VIPManager_HasVIPProperty);
+//    MSHookFunction((void *) getRealOffset(Offsets::Methods::VIPManager_HasVIPProperty),
+//                   (void *) VIPManager_HasVIPProperty,
+//                   (void **) &old_VIPManager_HasVIPProperty);
 
     LOGD("Done, the game should now behave abnormally");
     return nullptr;
 }
 
-JNIEXPORT jint JNICALL
+JNIEXPORT jint
+
+JNICALL
 JNI_OnLoad(JavaVM *vm, __unused void *reserved) {
     JNIEnv *globalEnv;
     vm->GetEnv((void **) &globalEnv, JNI_VERSION_1_6);
@@ -107,4 +117,8 @@ JNI_OnLoad(JavaVM *vm, __unused void *reserved) {
 }
 
 JNIEXPORT void JNICALL
-JNI_OnUnload(__unused JavaVM *vm, __unused void *reserved) {}
+JNI_OnUnload(__unused
+JavaVM *vm, __unused
+void *reserved
+) {
+}

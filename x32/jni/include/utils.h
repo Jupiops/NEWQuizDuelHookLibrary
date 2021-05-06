@@ -4,9 +4,13 @@
 #include <jni.h>
 #include <unistd.h>
 
+typedef unsigned char BYTE, *PBYTE;
+typedef unsigned short WORD, *PWORD;
 typedef unsigned long DWORD;
+typedef unsigned long long DWORD64;
 
 DWORD libBase = 0;
+DWORD libEnd = 0;
 
 /**************************************
 	ENTER THE GAME's LIB NAME HERE!
@@ -40,6 +44,45 @@ DWORD getRealOffset(DWORD address) {
         libBase = get_libBase(libName);
     }
     return (libBase + address);
+}
+
+DWORD64 calcRelativeOffset(DWORD64 address) {
+    if (address < libBase)
+        address += libBase;
+
+    return *(int32_t *) address + (address + 4) - libBase;
+}
+
+DWORD64 findPattern(const char *pattern) {
+    const char *pat = pattern;
+    DWORD64 firstMatch = 0;
+    DWORD64 rangeStart = libBase;
+    DWORD64 rangeEnd = libEnd;
+
+    for (DWORD64 pCur = rangeStart; pCur < rangeEnd; pCur++) {
+        if (!*pat)
+            return firstMatch - libBase;
+
+        if (*(PBYTE) pat == '\?' || *(BYTE *) pCur == getByte(pat)) {
+            if (!firstMatch)
+                firstMatch = pCur;
+
+            if (!pat[2]) {
+                if (pattern[0] == 'E' && (pattern[1] == '8' || pattern[1] == '9'))
+                    return calcRelativeOffset(firstMatch + 1);
+                return firstMatch - libBase;
+            }
+
+            if (*(PWORD) pat == '\?\?' || *(PBYTE) pat != '\?')
+                pat += 3;
+            else
+                pat += 2;
+        } else {
+            pat = pattern;
+            firstMatch = 0;
+        }
+    }
+    return 0;
 }
 
 template<class T>
