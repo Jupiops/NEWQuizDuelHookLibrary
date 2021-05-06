@@ -69,10 +69,15 @@ void *libhook_main(void *) {
 
     LOGD("Initialize hooking");
 
-    while (libBase == 0) {
-        libBase = get_libBase(libName);
+    // loop until our target library is found
+    ProcMap il2cppMap;
+    do {
+        il2cppMap = KittyMemory::getLibraryMap(libName);
         sleep(1);
-    }
+    } while (!il2cppMap.isValid());
+
+    libBase = (DWORD) il2cppMap.startAddr;
+    libEnd = (DWORD) il2cppMap.endAddr;
 
     Offsets::Initialize();
 
