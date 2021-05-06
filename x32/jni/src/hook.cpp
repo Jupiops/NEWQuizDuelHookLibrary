@@ -74,7 +74,7 @@ void *libhook_main(void *) {
     do {
         il2cppMap = KittyMemory::getLibraryMap(libName);
         sleep(1);
-    } while (!il2cppMap.isValid());
+    } while (!il2cppMap.isValid());;
 
     libBase = (DWORD) il2cppMap.startAddr;
     libEnd = (DWORD) il2cppMap.endAddr;
