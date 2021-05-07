@@ -98,9 +98,9 @@ void *libhook_main(void *) {
             (void *) QuestionContainerClassic_GetTimerDuration,
             (void **) &old_QuestionContainerClassic_GetTimerDuration);
 
-//    MSHookFunction((void *) getRealOffset(Offsets::Methods::VIPManager_HasVIPProperty),
-//                   (void *) VIPManager_HasVIPProperty,
-//                   (void **) &old_VIPManager_HasVIPProperty);
+    MSHookFunction((void *) getRealOffset(Offsets::Methods::VIPManager_HasVIPProperty),
+                   (void *) VIPManager_HasVIPProperty,
+                   (void **) &old_VIPManager_HasVIPProperty);
 
     LOGD("Done, the game should now behave abnormally");
     return nullptr;

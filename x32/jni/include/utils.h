@@ -9,9 +9,8 @@
 #define getByte(x)    (getBits(x[0]) << 4 | getBits(x[1]))
 
 typedef unsigned char BYTE, *PBYTE;
-typedef unsigned short WORD, *PWORD;
+typedef unsigned short *PWORD;
 typedef unsigned long DWORD;
-typedef unsigned long long DWORD64;
 
 DWORD libBase = 0;
 DWORD libEnd = 0;
@@ -50,20 +49,20 @@ DWORD getRealOffset(DWORD address) {
     return (libBase + address);
 }
 
-DWORD64 calcRelativeOffset(DWORD64 address) {
+DWORD calcRelativeOffset(DWORD address) {
     if (address < libBase)
         address += libBase;
 
     return *(int32_t *) address + (address + 4) - libBase;
 }
 
-DWORD64 findPattern(const char *pattern) {
+DWORD findPattern(const char *pattern) {
     const char *pat = pattern;
-    DWORD64 firstMatch = 0;
-    DWORD64 rangeStart = libBase;
-    DWORD64 rangeEnd = libEnd;
+    DWORD firstMatch = 0;
+    DWORD rangeStart = libBase;
+    DWORD rangeEnd = libEnd;
 
-    for (DWORD64 pCur = rangeStart; pCur < rangeEnd; pCur++) {
+    for (DWORD pCur = rangeStart; pCur < rangeEnd; pCur++) {
         if (!*pat)
             return firstMatch - libBase;
 
