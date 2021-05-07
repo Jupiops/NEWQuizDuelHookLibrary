@@ -67,12 +67,26 @@ void *libhook_main(void *) {
 
     LOGD("Initialize hooking");
 
-    while (libBase == 0) {
-        libBase = get_libBase(libName);
+    // loop until our target library is found
+    ProcMap il2cppMap;
+    do {
+        il2cppMap = KittyMemory::getLibraryMap(libName);
         sleep(1);
-    }
+    } while (!il2cppMap.isValid());
+
+    libBase = (DWORD) il2cppMap.startAddr;
+    libEnd = (DWORD) il2cppMap.endAddr;
 
     Offsets::Initialize();
+
+    LOGD("QuestionAnswerButton.Init Offset: %p",
+         (void *) Offsets::Methods::QuestionAnswerButton_Init);
+    LOGD("QuestionContainerClassic.GetTimerDuration Offset: %p",
+         (void *) Offsets::Methods::QuestionContainerClassic_GetTimerDuration);
+    LOGD("VIPManager.HasVIPProperty Offset: %p",
+         (void *) Offsets::Methods::VIPManager_HasVIPProperty);
+    LOGD("string.CreateString Offset: %p", (void *) Offsets::Methods::String_CreateString);
+    LOGD("string.Concat Offset: %p", (void *) Offsets::Methods::String_Concat);
 
     LOGD("Apply hooks");
 
