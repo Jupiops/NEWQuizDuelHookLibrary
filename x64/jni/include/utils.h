@@ -96,5 +96,4 @@ T *findFunction(DWORD offset) {
     return (T *) (libBase + offset);
 }
 
-
 #endif

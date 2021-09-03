@@ -68,3 +68,4 @@ invoke-static {}, Lcom/loadLib/libLoader;->loadLib()V
 * [Android Modding Tutorial Part 1](https://guidedhacking.com/threads/android-modding-tutorial-part-1.13124/)
 * [ARM To HEX Converter Online](https://armconverter.com/)
 * [Project Winter Multi-Hack](https://github.com/EquiFox/ProjectWinterHack)
+* [memdump | memory analysis for android](https://github.com/reveriel/memdump)
