@@ -23,8 +23,10 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - uses: nttld/setup-ndk@v1
+        id: setup-ndk
         with:
           ndk-version: r21e
-      - run: |
-      ndk-build NDK_PROJECT_PATH=./x32 APP_BUILD_SCRIPT=./x32/jni/Android.mk NDK_APPLICATION_MK=./x32/jni/Application.mk
-#      ndk-build NDK_PROJECT_PATH=./x64 APP_BUILD_SCRIPT=./x64/jni/Android.mk NDK_APPLICATION_MK=./x64/jni/Application.mk
+          add-to-path: false
+      - run: ./build.sh
+        env:
+          ANDROID_NDK_HOME: ${{ steps.setup-ndk.outputs.ndk-path }}
