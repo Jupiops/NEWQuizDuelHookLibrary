@@ -28,11 +28,10 @@ jobs:
           ndk-version: r16b
       - run: ./build.sh
 
-      - name: 'Tar files'
-        run: tar -cvzf my_files.tar.gz ./x32/libs ./x64/libs
-
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v2
         with:
-          name: libhook
-          path: my_files.tar.gz
+          name: libhook.so
+          path: |
+            x32/libs
+            x64/libs
