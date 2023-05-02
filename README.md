@@ -62,10 +62,10 @@ invoke-static {}, Lcom/loadLib/libLoader;->loadLib()V
 ## Useful links
 
 * [NdkBuild | Android Developers](https://developer.android.com/reference/tools/gradle-api/4.1/com/android/build/api/dsl/NdkBuild)
-* [Modding a Unity C++ Android Game](https://www.areizen.fr/post/modding-unity-game/)
-* [How to Mod an Android Game](https://vipmods.net/how-to-mod-an-android-game/)
+* ~~[Modding a Unity C++ Android Game](https://www.areizen.fr/post/modding-unity-game/)~~
+* ~~[How to Mod an Android Game](https://vipmods.net/how-to-mod-an-android-game/)~~
 * [List of modding related Github links](https://www.andnixsh.com/2020/06/list-of-modding-related-github-links.html)
-* [Android Modding Tutorial Part 1](https://guidedhacking.com/threads/android-modding-tutorial-part-1.13124/)
+* ~~[Android Modding Tutorial Part 1](https://guidedhacking.com/threads/android-modding-tutorial-part-1.13124/)~~
 * [ARM To HEX Converter Online](https://armconverter.com/)
 * [Project Winter Multi-Hack](https://github.com/EquiFox/ProjectWinterHack)
 * [memdump | memory analysis for android](https://github.com/reveriel/memdump)
