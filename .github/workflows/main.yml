@@ -38,6 +38,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: libhook.so
+          compression-level: 9
           path: |
             x32/libs
             x64/libs
