@@ -1,9 +1,9 @@
-#include <jni.h>
-#include <android/log.h>
+#include <jni>
+#include <android/log>
 #include <libs/KittyMemory/MemoryPatch.h>
 #include <libs/64InlineHook/And64InlineHook.hpp>
-#include <memory.h>
-#include <dlfcn.h>
+#include <memory>
+#include <dlfcn>
 #include <cstdio>
 #include <cstdlib>
 #include <include/utils.h>
@@ -27,12 +27,17 @@ struct Il2CppString {
     int32_t length; // 0x10 < Length of string *excluding* the trailing null (which is included in 'chars').
     char16_t data[1]; // 0x14
 
-    typedef Il2CppString *Il2CppString_CreateString(void *this_, const char *str);
+    // typedef Il2CppString *Il2CppString_CreateString(void *this_, const char *str);
+    typedef Il2CppString* Il2CppString_CreateString(void* this_, const char* str, int startIndex, int length);
 
     typedef Il2CppString *Il2CppString_Concat(Il2CppString *str0, Il2CppString *str1);
 
-    static Il2CppString *New(const char *str) {
-        return findFunction<Il2CppString_CreateString>(Offsets::Methods::String_CreateString)(nullptr, str);
+    // static Il2CppString *New(const char *str) {
+    //     return findFunction<Il2CppString_CreateString>(Offsets::Methods::String_CreateString)(nullptr, str);
+    // }
+    static Il2CppString* New(const char* str) {
+        int length = strlen(str);
+        return findFunction<Il2CppString_CreateString>(Offsets::Methods::String_CreateString)(nullptr, str, 0, length);
     }
 
     static Il2CppString *Concat(Il2CppString *str0, Il2CppString *str1) {
@@ -40,11 +45,9 @@ struct Il2CppString {
     }
 };
 
-void (*old_QuestionAnswerButton_Init)(void *this_, int32_t answerIndex, Il2CppString *text,
-                                      void *onClick, const void *method);
+void (*old_QuestionAnswerButton_Init)(void *this_, int32_t answerIndex, Il2CppString *text, void *onClick, const void *method);
 
-void QuestionAnswerButton_Init(void *this_, int32_t answerIndex, Il2CppString *text, void *onClick,
-                               const void *method) {
+void QuestionAnswerButton_Init(void *this_, int32_t answerIndex, Il2CppString *text, void *onClick, const void *method) {
     if (answerIndex == 0) {
         text = Il2CppString::Concat(text, Il2CppString::New(" ✔"));
     }
@@ -79,12 +82,9 @@ void *libhook_main(void *) {
 
     Offsets::Initialize();
 
-    LOGD("QuestionAnswerButton.Init Offset: %p",
-         (void *) Offsets::Methods::QuestionAnswerButton_Init);
-    LOGD("QuestionContainerClassic.GetTimerDuration Offset: %p",
-         (void *) Offsets::Methods::QuestionContainerClassic_GetTimerDuration);
-    LOGD("VIPManager.HasVIPProperty Offset: %p",
-         (void *) Offsets::Methods::VIPManager_HasVIPProperty);
+    LOGD("QuestionAnswerButton.Init Offset: %p", (void *) Offsets::Methods::QuestionAnswerButton_Init);
+    LOGD("QuestionContainerClassic.GetTimerDuration Offset: %p", (void *) Offsets::Methods::QuestionContainerClassic_GetTimerDuration);
+    LOGD("VIPManager.HasVIPProperty Offset: %p", (void *) Offsets::Methods::VIPManager_HasVIPProperty);
     LOGD("string.CreateString Offset: %p", (void *) Offsets::Methods::String_CreateString);
     LOGD("string.Concat Offset: %p", (void *) Offsets::Methods::String_Concat);
 
@@ -94,10 +94,9 @@ void *libhook_main(void *) {
                     (void *) QuestionAnswerButton_Init,
                     (void **) &old_QuestionAnswerButton_Init);
 
-    A64HookFunction(
-            (void *) getRealOffset(Offsets::Methods::QuestionContainerClassic_GetTimerDuration),
-            (void *) QuestionContainerClassic_GetTimerDuration,
-            (void **) &old_QuestionContainerClassic_GetTimerDuration);
+    A64HookFunction((void *) getRealOffset(Offsets::Methods::QuestionContainerClassic_GetTimerDuration),
+                    (void *) QuestionContainerClassic_GetTimerDuration,
+                    (void **) &old_QuestionContainerClassic_GetTimerDuration);
 
     A64HookFunction((void *) getRealOffset(Offsets::Methods::VIPManager_HasVIPProperty),
                     (void *) VIPManager_HasVIPProperty,
