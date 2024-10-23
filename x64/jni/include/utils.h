@@ -1,9 +1,9 @@
 #ifndef UTILS_H
 #define UTILS_H
 
-#include <jni>
-#include <unistd>
-#include <cstdint>
+#include <jni.h>
+#include <unistd.h>
+#include <cstdint.h>
 
 #define INRANGE(x, low, high) (low <= x && x <= high)
 #define getBits(x) (INRANGE((x&(~0x20)),'A','F') ? ((x&(~0x20)) - 'A' + 0xa) : (INRANGE(x,'0','9') ? x - '0' : 0))
