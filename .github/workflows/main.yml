@@ -24,23 +24,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-      # Cache NDK toolchain locally
-      - uses: actions/cache@v3
-        id: cache-ndk
-        with:
-          path: ${{ runner.tool_cache }}/android-ndk # Adjusting the path to the runner's tool cache directory
-          key: ndk-${{ runner.os }}-${{ hashFiles('build.gradle') }}-r21e
-          restore-keys: |
-            ndk-${{ runner.os }}-
 
       # Set up NDK using local-cache
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
-          ndk-version: r21e
-          local-cache: true # Enable local caching
+          ndk-version: r16b
 
-      # Install dependencies (not cached due to permissions issues)
+      # Install dependencies
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y libncurses5
 
@@ -51,7 +42,7 @@ jobs:
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: libhook.so
+          name: libhookso
           compression-level: 9
           path: |
             x32/libs
