@@ -68,7 +68,7 @@ bool VIPManager_HasVIPProperty(__unused int32_t property, __unused const void *m
 
 void *libhook_main(void *) {
 
-    LOGD("Initialize hooking");
+    LOGD("Initialize hooking x64");
 
     // loop until our target library is found
     ProcMap il2cppMap;
