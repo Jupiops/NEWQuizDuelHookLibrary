@@ -75,8 +75,8 @@ void *libhook_main(void *) {
         sleep(1);
     } while (!il2cppMap.isValid());
 
-    libBase = (DWORD) il2cppMap.startAddr;
-    libEnd = (DWORD) il2cppMap.endAddr;
+    libBase = (uintptr_t) il2cppMap.startAddr;
+    libEnd = (uintptr_t) il2cppMap.endAddr;
 
     Offsets::Initialize();
 

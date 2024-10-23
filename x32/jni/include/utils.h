@@ -3,6 +3,7 @@
 
 #include <jni.h>
 #include <unistd.h>
+#include <cstdint>
 
 #define INRANGE(x, low, high) (low <= x && x <= high)
 #define getBits(x) (INRANGE((x&(~0x20)),'A','F') ? ((x&(~0x20)) - 'A' + 0xa) : (INRANGE(x,'0','9') ? x - '0' : 0))
@@ -10,23 +11,22 @@
 
 typedef unsigned char BYTE, *PBYTE;
 typedef unsigned short *PWORD;
-typedef unsigned long DWORD;
 
-DWORD libBase = 0;
-DWORD libEnd = 0;
+uintptr_t libBase = 0;
+uintptr_t libEnd = 0;
 
 /**************************************
 	ENTER THE GAME's LIB NAME HERE!
 ***************************************/
 const char *libName = "libil2cpp.so";
 
-DWORD get_libBase(const char *libName);
+uintptr_t get_libBase(const char *libName);
 
-DWORD getRealOffset(DWORD address);
+uintptr_t getRealOffset(uintptr_t address);
 
-DWORD get_libBase(const char *libName) {
+uintptr_t get_libBase(const char *libName) {
     FILE *fp;
-    DWORD addr = 0;
+    uintptr_t addr = 0;
     char filename[32], buffer[1024];
     snprintf(filename, sizeof(filename), "/proc/%d/maps", getpid());
     fp = fopen(filename, "rt");
@@ -42,27 +42,27 @@ DWORD get_libBase(const char *libName) {
     return addr;
 }
 
-DWORD getRealOffset(DWORD address) {
+uintptr_t getRealOffset(uintptr_t address) {
     if (libBase == 0) {
         libBase = get_libBase(libName);
     }
     return (libBase + address);
 }
 
-DWORD calcRelativeOffset(DWORD address) {
+uintptr_t calcRelativeOffset(uintptr_t address) {
     if (address < libBase)
         address += libBase;
 
     return *(int32_t *) address + (address + 4) - libBase;
 }
 
-DWORD findPattern(const char *pattern) {
+uintptr_t findPattern(const char *pattern) {
     const char *pat = pattern;
-    DWORD firstMatch = 0;
-    DWORD rangeStart = libBase;
-    DWORD rangeEnd = libEnd;
+    uintptr_t firstMatch = 0;
+    uintptr_t rangeStart = libBase;
+    uintptr_t rangeEnd = libEnd;
 
-    for (DWORD pCur = rangeStart; pCur < rangeEnd; pCur++) {
+    for (uintptr_t pCur = rangeStart; pCur < rangeEnd; pCur++) {
         if (!*pat)
             return firstMatch - libBase;
 
@@ -89,7 +89,7 @@ DWORD findPattern(const char *pattern) {
 }
 
 template<class T>
-T *findFunction(DWORD offset) {
+T *findFunction(uintptr_t offset) {
     if (libBase == 0) {
         libBase = get_libBase(libName);
     }

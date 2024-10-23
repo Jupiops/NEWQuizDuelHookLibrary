@@ -60,7 +60,7 @@ invoke-static {}, Lcom/loadLib/libLoader;->loadLib()V
   <br>
 
 ```shell
-adb -d logcat se.maginteractive.quizduel2:D *:S
+adb -d logcat HOOK_LIBRARY:D *:S
 ```
 
 ## Useful links

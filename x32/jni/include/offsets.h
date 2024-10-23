@@ -23,7 +23,7 @@ namespace Offsets {
          *
          * public void QuizDuel.QuestionAnswerButton.Init(int answerIndex, string text, ButtonClick onClick)
          */
-        DWORD QuestionAnswerButton_Init;
+        uintptr_t QuestionAnswerButton_Init;
         /*
          * android:versionCode="115020157" android:versionName="1.15.2"
          * [Address(RVA = "0x7AF6F8", Offset = "0x7AF6F8", VA = "0x7AF6F8", Slot = "25")]
@@ -36,7 +36,7 @@ namespace Offsets {
          *
          * protected override float QuizDuel.Classic.QuestionContainerClassic.GetTimerDuration()
          */
-        DWORD QuestionContainerClassic_GetTimerDuration;
+        uintptr_t QuestionContainerClassic_GetTimerDuration;
         /*
          * android:versionCode="115020157" android:versionName="1.15.2"
          * [Address(RVA = "0x62BBD4", Offset = "0x62BBD4", VA = "0x62BBD4")]
@@ -49,7 +49,7 @@ namespace Offsets {
          *
          * public static bool VIPManager.HasVIPProperty(VIPProperty property)
          */
-        DWORD VIPManager_HasVIPProperty;
+        uintptr_t VIPManager_HasVIPProperty;
         /*
          * android:versionCode="115020157" android:versionName="1.15.2"
          * [Address(RVA = "0x1043CC0", Offset = "0x1043CC0", VA = "0x1043CC0")]
@@ -65,7 +65,7 @@ namespace Offsets {
          *
          * private unsafe string string.CreateString(sbyte* value)
          */
-        DWORD String_CreateString;
+        uintptr_t String_CreateString;
         /*
          * android:versionCode="115020157" android:versionName="1.15.2"
          * [Address(RVA = "0x1034DD0", Offset = "0x1034DD0", VA = "0x1034DD0")]
@@ -81,7 +81,7 @@ namespace Offsets {
          *
          * public static string string.Concat(string str0, string str1)
          */
-        DWORD String_Concat;
+        uintptr_t String_Concat;
     }
 
     void Initialize() {
