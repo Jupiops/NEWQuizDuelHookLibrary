@@ -24,34 +24,23 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
-      # Cache NDK toolchain
-      - name: Cache NDK
+      # Cache NDK toolchain locally
+      - uses: actions/cache@v3
         id: cache-ndk
-        uses: actions/cache@v4
         with:
-          path: ${{ steps.setup-ndk.outputs.ndk-path }} # The location where the NDK is installed
-          key: ndk-${{ runner.os }}-${{ hashFiles('build.gradle') }}-r16b
+          path: ${{ runner.tool_cache }}/android-ndk # Adjusting the path to the runner's tool cache directory
+          key: ndk-${{ runner.os }}-${{ hashFiles('build.gradle') }}-r21e
           restore-keys: |
             ndk-${{ runner.os }}-
-      
-      # Set up NDK if not cached
-      - name: Set up NDK
-        if: steps.cache-ndk.outputs.cache-hit != 'true'
-        uses: nttld/setup-ndk@v1
+
+      # Set up NDK using local-cache
+      - uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
-          ndk-version: r16b
+          ndk-version: r21e
+          local-cache: true # Enable local caching
 
-      # Cache apt-get dependencies
-      - name: Cache APT packages
-        uses: actions/cache@v4
-        with:
-          path: /var/cache/apt
-          key: apt-cache-${{ runner.os }}-${{ hashFiles('build.sh') }}
-          restore-keys: |
-            apt-cache-${{ runner.os }}-
-
-      # Install dependencies
+      # Install dependencies (not cached due to permissions issues)
       - name: Install dependencies
         run: sudo apt-get update && sudo apt-get install -y libncurses5
 
@@ -62,7 +51,7 @@ jobs:
       - name: 'Upload Artifact'
         uses: actions/upload-artifact@v4
         with:
-          name: libhookso
+          name: libhook.so
           compression-level: 9
           path: |
             x32/libs
