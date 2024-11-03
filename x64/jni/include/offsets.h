@@ -11,7 +11,10 @@ namespace Offsets {
 
     }
     namespace Methods {
-        /*
+        /* 
+         * android:versionCode="143120494" android:versionName="1.43.12"
+         * [Address(RVA = "0x1A8EE1C", Offset = "0x1A8DE1C", VA = "0x1A8EE1C")]
+         * 
          * android:versionCode="141040468" android:versionName="1.41.04"
          * [Address(RVA = "0x1A79C44", Offset = "0x1A78C44", VA = "0x1A79C44")]
          *
@@ -28,6 +31,9 @@ namespace Offsets {
          */
         uintptr_t QuestionAnswerButton_Init;
         /*
+         * android:versionCode="143120494" android:versionName="1.43.12"
+         * [Address(RVA = "0x1B6D154", Offset = "0x1B6C154", VA = "0x1B6D154", Slot = "25")]
+         * 
          * android:versionCode="141040468" android:versionName="1.41.04"
          * [Address(RVA = "0x1B5658C", Offset = "0x1B5558C", VA = "0x1B5658C", Slot = "25")]
          *
@@ -44,6 +50,9 @@ namespace Offsets {
          */
         uintptr_t QuestionContainerClassic_GetTimerDuration;
         /*
+         * android:versionCode="143120494" android:versionName="1.43.12"
+         * [Address(RVA = "0x1B00A88", Offset = "0x1AFFA88", VA = "0x1B00A88")]
+         * 
          * android:versionCode="141040468" android:versionName="1.41.04"
          * [Address(RVA = "0x1AF6F50", Offset = "0x1AF5F50", VA = "0x1AF6F50")]
          *
@@ -60,6 +69,9 @@ namespace Offsets {
          */
         uintptr_t VIPManager_HasVIPProperty;
         /*
+         * android:versionCode="143120494" android:versionName="1.43.12"
+         * [Address(RVA = "0x2E49CB8", Offset = "0x2E48CB8", VA = "0x2E49CB8")]
+         * 
          * android:versionCode="141040468" android:versionName="1.41.04"
          * [Address(RVA = "0x2E506D4", Offset = "0x2E4F6D4", VA = "0x2E506D4")]
          *
@@ -81,6 +93,9 @@ namespace Offsets {
          */
         uintptr_t String_CreateString;
         /*
+         * android:versionCode="143120494" android:versionName="1.43.12"
+         * [Address(RVA = "0x2E375C8", Offset = "0x2E365C8", VA = "0x2E375C8")]
+         * 
          * android:versionCode="141040468" android:versionName="1.41.04"
          * [Address(RVA = "0x2E3DFE4", Offset = "0x2E3CFE4", VA = "0x2E3DFE4")]
          *
@@ -99,12 +114,12 @@ namespace Offsets {
     }
 
     void Initialize() {
-        Methods::QuestionAnswerButton_Init = find_pattern("? ? ? F8 ? ? ? A9 ? ? ? A9 ? ? ? A9 ? ? ? D0 ? ? ? 39 F6 03 03 AA F5 03 02 AA F4 03 01 2A");
-        Methods::QuestionContainerClassic_GetTimerDuration = find_pattern("? ? ? F8 ? ? ? A9 ? ? ? D0 ? ? ? B0 ? ? ? 39 ? ? ? F9 ? ? ? 37 ? ? ? B0 ? ? ? F9 ? ? ? 97 ? ? ? 52 ? ? ? 39 ? ? ? F9 ? ? ? B9 ? ? ? 35 ? ? ? 97 E0 03 1F AA ? ? ? 97");
+        Methods::QuestionAnswerButton_Init = find_pattern("FE 0F 1C F8 F8 5F ? A9 F6 57 ? A9 ? ? ? ? 37 1B ? F0 E8 1A 49 39 F6 ? ? AA F5 ? ? AA F4 ? ? 2A");
+        Methods::QuestionContainerClassic_GetTimerDuration = find_pattern("FE 0F 1E F8 F4 4F 01 A9 ? ? ? ? ? FB 00 ? 68 ? ? 39 94 ? ? F9 C8 00 00 37 ? FB 00 ? 00 ? ? F9 ? ? F1 97 28 00 80 52 68 ? ? 39 80 02 40 F9");
         Methods::VIPManager_HasVIPProperty = find_pattern("? ? ? 71 ? ? ? 54 ? ? ? F8 ? ? ? 94 ? ? ? F8 ? ? ? 36");
 
         Methods::String_CreateString = find_pattern("E0 03 01 AA E1 03 02 2A E2 03 03 2A ? ? ? 17 ? ? ? 17");
-        Methods::String_Concat = find_pattern("? ? ? F8 ? ? ? A9 ? ? ? A9 ? ? ? B0 ? ? ? 39 F4 03 01 AA F3 03 00 AA ? ? ? 37 ? ? ? F0 ? ? ? F9 ? ? ? 97 ? ? ? 52 ? ? ? 39 ? ? ? B4 ? ? ? B9");
+        Methods::String_Concat = find_pattern("FE 0F 1D F8 F6 57 01 A9 F4 4F 02 A9 ? ? 00 ? A8 02 ? 39 F4 03 01 AA F3 03 00 AA C8 00 00 37 ? ? 00 ? 00 ? 45 F9 ? ? A6 97");
     }
 }
 

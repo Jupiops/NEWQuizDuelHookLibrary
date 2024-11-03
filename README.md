@@ -59,10 +59,6 @@ invoke-static {}, Lcom/loadLib/libLoader;->loadLib()V
 * Step 2: Profit
   <br>
 
-```shell
-adb -d logcat HOOK_LIBRARY:D *:S
-```
-
 ## Useful links
 
 * [NdkBuild | Android Developers](https://developer.android.com/reference/tools/gradle-api/4.1/com/android/build/api/dsl/NdkBuild)

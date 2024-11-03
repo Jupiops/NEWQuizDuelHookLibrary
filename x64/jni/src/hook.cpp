@@ -5,21 +5,40 @@
 #include <cstdlib>
 #include "include/offsets.h"
 
+#if defined(_MSC_VER)
+    #define IL2CPP_ZERO_LEN_ARRAY 0
+#else
+    #define IL2CPP_ZERO_LEN_ARRAY 0
+#endif
 
-struct Il2CppObject {
-    __unused void *klass;
+#if _MSC_VER
+typedef wchar_t Il2CppChar;
+#elif __has_feature(cxx_unicode_literals)
+typedef char16_t Il2CppChar;
+#else
+typedef uint16_t Il2CppChar;
+#endif
+
+typedef struct Il2CppObject
+{
+    union
+    {
+        __unused void *klass;
+        __unused void *vtable;
+    };
     __unused void *monitor;
-};
+} Il2CppObject;
+
 
 // System.String
-struct Il2CppString {
-    __unused Il2CppObject object;
-    int32_t length; // 0x10 < Length of string *excluding* the trailing null (which is included in 'chars').
-    char16_t data[1]; // 0x14
+typedef struct Il2CppString
+{
+    Il2CppObject object;
+    int32_t length;                             ///< Length of string *excluding* the trailing null (which is included in 'chars').
+    Il2CppChar chars[IL2CPP_ZERO_LEN_ARRAY];
 
     // typedef Il2CppString *Il2CppString_CreateString(void *this_, const char *str);
-    typedef Il2CppString *Il2CppString_CreateString(void *this_, const char *str, int startIndex,
-                                                    int length);
+    typedef Il2CppString *Il2CppString_CreateString(void *this_, const char *str, int startIndex, int length);
 
     typedef Il2CppString *Il2CppString_Concat(Il2CppString *str0, Il2CppString *str1);
 
@@ -28,15 +47,17 @@ struct Il2CppString {
     // }
     static Il2CppString *New(const char *str) {
         int length = strlen(str);
-//        LOGD("Creating new string \"%s\" with length %d", str, length);
+        // LOGD("Creating new string \"%s\" with length %d", str, length);
         return findFunction<Il2CppString_CreateString>(Offsets::Methods::String_CreateString)(nullptr, str, 0, length);
     }
 
     static Il2CppString *Concat(Il2CppString *str0, Il2CppString *str1) {
-//        LOGD("Length of string 0: %d, length of string 1: %d", str0->length, str1->length);
+        // LOGD("Length of string 0: %d, length of string 1: %d", str0->length, str1->length);
         return findFunction<Il2CppString_Concat>(Offsets::Methods::String_Concat)(str0, str1);
     }
-};
+
+} Il2CppString;
+
 
 void (*old_QuestionAnswerButton_Init)(void *this_, int32_t answerIndex, Il2CppString *text,
                                       void *onClick, const void *method);
