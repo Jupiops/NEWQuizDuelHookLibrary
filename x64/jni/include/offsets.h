@@ -12,6 +12,9 @@ namespace Offsets {
     }
     namespace Methods {
         /* 
+         * android:versionCode="144140512" android:versionName="1.44.14"
+         *
+         *
          * android:versionCode="143120494" android:versionName="1.43.12"
          * [Address(RVA = "0x1A8EE1C", Offset = "0x1A8DE1C", VA = "0x1A8EE1C")]
          * 
@@ -114,12 +117,12 @@ namespace Offsets {
     }
 
     void Initialize() {
-        Methods::QuestionAnswerButton_Init = find_pattern("FE 0F 1C F8 F8 5F ? A9 F6 57 ? A9 ? ? ? ? 37 1B ? F0 E8 1A 49 39 F6 ? ? AA F5 ? ? AA F4 ? ? 2A");
-        Methods::QuestionContainerClassic_GetTimerDuration = find_pattern("FE 0F 1E F8 F4 4F 01 A9 ? ? ? ? ? FB 00 ? 68 ? ? 39 94 ? ? F9 C8 00 00 37 ? FB 00 ? 00 ? ? F9 ? ? F1 97 28 00 80 52 68 ? ? 39 80 02 40 F9");
+        Methods::QuestionAnswerButton_Init = find_pattern("FE 0F 1C F8 F8 5F 01 A9 F6 57 02 A9 F4 4F 03 A9 ? ? 01 ? E8 ? ? 39 F6 03 03 AA F5 03 02 AA F4 03 01 2A F3 03 00 AA 88 01 00 37 ? ? 01 ?");
+        Methods::QuestionContainerClassic_GetTimerDuration = find_pattern("FE 0F 1E F8 F4 4F 01 A9 ? ? ? ? ? FB 00 ? 68 ? ? 39 94 ? ? F9 C8 00 00 37 ? FB 00 ? 00 ? ? F9 ? ? F1 97 28 00 80 52 68 ? ? 39 80 02 40 F9 08 E0 40 B9 48 00 00 35 ? ? F1 97");
         Methods::VIPManager_HasVIPProperty = find_pattern("? ? ? 71 ? ? ? 54 ? ? ? F8 ? ? ? 94 ? ? ? F8 ? ? ? 36");
 
         Methods::String_CreateString = find_pattern("E0 03 01 AA E1 03 02 2A E2 03 03 2A ? ? ? 17 ? ? ? 17");
-        Methods::String_Concat = find_pattern("FE 0F 1D F8 F6 57 01 A9 F4 4F 02 A9 ? ? 00 ? A8 02 ? 39 F4 03 01 AA F3 03 00 AA C8 00 00 37 ? ? 00 ? 00 ? 45 F9 ? ? A6 97");
+        Methods::String_Concat = find_pattern("FE 0F 1D F8 F6 57 01 A9 F4 4F 02 A9 ? ? 00 ? A8 ? ? 39 F4 03 01 AA F3 03 00 AA C8 00 00 37 ? ? 00 ? 00 ? ? F9 ? ? A6 97 28 00 80 52 A8 ? ? 39 D3 00 00 B4 68 12 40 B9 88 00 00 34");
     }
 }
 

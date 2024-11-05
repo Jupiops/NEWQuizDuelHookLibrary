@@ -25,3 +25,9 @@ adb shell pm path se.maginteractive.quizduel2
 ```shell
 adb pull /data/app/se.maginteractive.quizduel2-1/base.apk
 ```
+
+## Merges multiple splitted apk files (directory, xapk, apkm, apks ...) to standalone apk
+
+```shell
+java -jar APKEditor-*.jar  m -i /path/to/apk/files
+```
