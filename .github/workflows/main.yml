@@ -29,11 +29,7 @@ jobs:
       - uses: nttld/setup-ndk@v1
         id: setup-ndk
         with:
-          ndk-version: r21e
-
-      # Install dependencies
-#      - name: Install dependencies
-#        run: sudo apt-get update && sudo apt-get install -y libncurses5
+          ndk-version: r23c
 
       # Run the build script
       - run: ./build.sh
