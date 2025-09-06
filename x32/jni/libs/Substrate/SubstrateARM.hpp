@@ -22,6 +22,13 @@
 #ifndef SUBSTRATE_ARM_HPP
 #define SUBSTRATE_ARM_HPP
 
+// Fix overloaded abs in preprocessor macros with unsigned/size_t operands
+#include <stdint.h>
+
+#ifndef MS_ABS32
+#define MS_ABS32(v) (((int32_t)(v)) < 0 ? -(int32_t)(v) : (int32_t)(v))
+#endif
+
 enum A$r {
     A$r0, A$r1, A$r2, A$r3,
     A$r4, A$r5, A$r6, A$r7,
@@ -46,9 +53,9 @@ enum A$c {
 #define A$msr_cpsr_f_rm(rm) /* msr cpsr_f, rm */ \
     (0xe128f000 | (rm))
 #define A$ldr_rd_$rn_im$(rd, rn, im) /* ldr rd, [rn, #im] */ \
-    (0xe5100000 | ((im) < 0 ? 0 : 1 << 23) | ((rn) << 16) | ((rd) << 12) | abs(im))
+    (0xe5100000 | ((im) < 0 ? 0 : 1 << 23) | ((rn) << 16) | ((rd) << 12) | MS_ABS32(im))
 #define A$str_rd_$rn_im$(rd, rn, im) /* sr rd, [rn, #im] */ \
-    (0xe5000000 | ((im) < 0 ? 0 : 1 << 23) | ((rn) << 16) | ((rd) << 12) | abs(im))
+    (0xe5000000 | ((im) < 0 ? 0 : 1 << 23) | ((rn) << 16) | ((rd) << 12) | MS_ABS32(im))
 #define A$sub_rd_rn_$im(rd, rn, im) /* sub, rd, rn, #im */ \
     (0xe2400000 | ((rn) << 16) | ((rd) << 12) | (im & 0xff))
 #define A$blx_rm(rm) /* blx rm */ \

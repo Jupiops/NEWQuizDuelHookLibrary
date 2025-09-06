@@ -38,6 +38,13 @@
 #include <stdio.h>
 #include <string.h>
 
+// Fix overloaded abs in preprocessor macros with unsigned/size_t operands
+#include <stdint.h>
+
+#ifndef MS_ABS32
+#define MS_ABS32(v) (((int32_t)(v)) < 0 ? -(int32_t)(v) : (int32_t)(v))
+#endif
+
 #ifdef __arm__
 /* WebCore (ARM) PC-Relative:
 X    1  ldr r*,[pc,r*] !=
@@ -90,7 +97,7 @@ X 4790  ldr r*,[pc,#*]    */
 #define T1$ldr_rt_$rn_im$(rt, rn, im) /* ldr rt, [rn, #im] */ \
     (0xf850 | ((im < 0 ? 0 : 1) << 7) | (rn))
 #define T2$ldr_rt_$rn_im$(rt, rn, im) /* ldr rt, [rn, #im] */ \
-    (((rt) << 12) | abs(im))
+    (((rt) << 12) | MS_ABS32(im))
 
 #define T1$mrs_rd_apsr(rd) /* mrs rd, apsr */ \
     (0xf3ef)
