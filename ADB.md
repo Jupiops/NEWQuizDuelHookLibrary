@@ -26,6 +26,15 @@ adb shell pm path se.maginteractive.quizduel2
 adb pull /data/app/se.maginteractive.quizduel2-1/base.apk
 ```
 
+> Note: When getting a 'Permission denied' error, you may need to root your device or use `adb backup` instead. Another
+> workaround is to copy the APK to a readable location first:
+
+```shell
+adb shell ls /sdcard/
+adb shell cp /data/app/se.maginteractive.quizduel2-1/base.apk /sdcard/
+adb pull /sdcard/base.apk
+```
+
 ## Merges multiple splitted apk files (directory, xapk, apkm, apks ...) to standalone apk
 
 ```shell
