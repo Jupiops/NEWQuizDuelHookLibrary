@@ -117,12 +117,12 @@ namespace Offsets {
     }
 
     void Initialize() {
-        Methods::QuestionAnswerButton_Init = find_pattern("FE 0F 1C F8 F8 5F 01 A9 F6 57 02 A9 F4 4F 03 A9 ? ? 01 ? E8 ? ? 39 F6 03 03 AA F5 03 02 AA F4 03 01 2A F3 03 00 AA 88 01 00 37 ? ? 01 ?");
-        Methods::QuestionContainerClassic_GetTimerDuration = find_pattern("FE 0F 1E F8 F4 4F 01 A9 ? ? ? ? ? FB 00 ? 68 ? ? 39 94 ? ? F9 C8 00 00 37 ? FB 00 ? 00 ? ? F9 ? ? F1 97 28 00 80 52 68 ? ? 39 80 02 40 F9 08 E0 40 B9 48 00 00 35 ? ? F1 97");
-        Methods::VIPManager_HasVIPProperty = find_pattern("? ? ? 71 ? ? ? 54 ? ? ? F8 ? ? ? 94 ? ? ? F8 ? ? ? 36");
+        Methods::QuestionAnswerButton_Init = find_pattern("FE 0F 1C F8 F8 5F 01 A9 F6 57 02 A9 F4 4F 03 A9 ? ? 01 ? E8 ? ? 39 F6 03 03 AA F5 03 02 AA");
+        Methods::QuestionContainerClassic_GetTimerDuration = find_pattern("FE 0F 1E F8 F4 4F 01 A9 ? ? 01 ? ? ? ? ? 68 ? ? 39 94 ? ? F9 C8 00 00 37 ? ? ? ? 00 ? ? F9 ? ? ? 97 28 00 80 52 68 ? ? 39 80 02 40 F9 08 E0 40 B9 48 00 00 35 ? ? ? 97 E0 03 1F AA ? ? ? 97 F4 4F 41 A9 1F 00 00 72");
+        Methods::VIPManager_HasVIPProperty = find_pattern("1F 04 00 71 E1 00 00 54 FE 0F 1F F8 ? ? 00 94 FE 07 41 F8 60 00 00 36 20 00 80 52 C0 03 5F D6");
 
-        Methods::String_CreateString = find_pattern("E0 03 01 AA E1 03 02 2A E2 03 03 2A ? ? ? 17 ? ? ? 17");
-        Methods::String_Concat = find_pattern("FE 0F 1D F8 F6 57 01 A9 F4 4F 02 A9 ? ? 00 ? A8 ? ? 39 F4 03 01 AA F3 03 00 AA C8 00 00 37 ? ? 00 ? 00 ? ? F9 ? ? A6 97 28 00 80 52 A8 ? ? 39 D3 00 00 B4 68 12 40 B9 88 00 00 34");
+        Methods::String_CreateString = find_pattern("E0 03 01 AA E1 03 02 2A E2 03 03 2A 13 FF FF 17 ? ? ? 17 FE 57 BE A9 F4 4F 01 A9 ? ? 00 ?");
+        Methods::String_Concat = find_pattern("FE 0F 1D F8 F6 57 01 A9 F4 4F 02 A9 ? ? 00 ? A8 ? ? 39 F4 03 01 AA F3 03 00 AA C8 00 00 37 ? ? 00 ? 00 ? ? F9 ? ? ? 97 28 00 80 52 A8 ? ? 39 D3 00 00 B4");
     }
 }
 
