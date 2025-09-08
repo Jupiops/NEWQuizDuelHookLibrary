@@ -43,4 +43,4 @@ jobs:
         with:
           name: libhookso
           compression-level: 9
-          path: libs/*
+          path: hooklib/libs/*
