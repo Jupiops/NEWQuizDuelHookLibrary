@@ -15,7 +15,7 @@ namespace game_offsets {
         bool mandatory = true;
     };
 
-    static std::vector<NamedPattern> buildPatternList() {
+    static std::vector <NamedPattern> buildPatternList() {
         return {
                 {{"QuestionAnswerButton_Init",                 "FE 0F 1C F8 F8 5F 01 A9 F6 57 02 A9 F4 4F 03 A9 ? ? 01 ? E8 ? ? 39 F6 03 03 AA F5 03 02 AA",                                                                                                                          false, 0}, true},
                 {{"QuestionContainerClassic_GetTimerDuration", "FE 0F 1E F8 F4 4F 01 A9 ? ? 01 ? ? ? ? ? 68 ? ? 39 94 ? ? F9 C8 00 00 37 ? ? ? ? 00 ? ? F9 ? ? ? 97 28 00 80 52 68 ? ? 39 80 02 40 F9 08 E0 40 B9 48 00 00 35 ? ? ? 97 E0 03 1F AA ? ? ? 97 F4 4F 41 A9 1F 00 00 72", false, 0}, true},
@@ -30,6 +30,9 @@ namespace game_offsets {
             LOGE("InitializeOffsets: library range invalid");
             return false;
         }
+
+        // Make imageBase available globally for absolute resolution later.
+        hooklib::OffsetRegistry::instance().setImageBase(mmap.imageBase());
 
         auto patterns = buildPatternList();
         bool allMandatoryOk = true;

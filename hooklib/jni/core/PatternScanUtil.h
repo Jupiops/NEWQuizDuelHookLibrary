@@ -15,11 +15,10 @@ namespace hooklib {
             PatternScanner ps(base, end);
             auto r = ps.find(spec);
             if (r.status == PatternStatus::Found) {
-                LOGD("Pattern %s found in segment 0x%lx-0x%lx at offset 0x%lx",
-                     spec.name.c_str(),
-                     (unsigned long) seg.start,
-                     (unsigned long) seg.end,
-                     (unsigned long) r.relativeOffset);
+                LOGD("Pattern %s found in segment 0x%lx-0x%lx at offset 0x%lx (abs %p)",
+                     spec.name.c_str(), (unsigned long) seg.start,
+                     (unsigned long) seg.end, (unsigned long) r.relativeOffset,
+                     (void *) (seg.start + r.relativeOffset));
                 // Convert from "segment-relative" to "image-relative"
                 r.relativeOffset += (seg.start - mm.imageBase());
                 return r; // return first match; or keep searching if you expect multiple

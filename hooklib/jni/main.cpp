@@ -42,39 +42,26 @@ namespace {
             return;
         }
 
-        // Initialize offsets
+        // Initialize offsets (also sets imageBase in OffsetRegistry)
         if (!game_offsets::InitializeOffsets(mmap)) {
             LOGE("Mandatory offsets missing; aborting hook install.");
             return;
         }
 
         ActiveBackend backend;
-        hooklib::HookManager hm(backend);
-
-        auto base = mmap.range().base;
-        auto abs = [base](uintptr_t rel) {
-            return reinterpret_cast<void *>(base + rel);
-        };
+        hooklib::HookManager hm(backend, mmap.imageBase());
 
         // Build hook requests referencing offset names
         std::vector <hooklib::HookRequest> reqs = {
                 {"QuestionAnswerButton_Init",                 "QuestionAnswerButton_Init",                 (void *) targets::QuestionAnswerButton_Init,                 (void **) &targets::orig_QuestionAnswerButton_Init},
                 {"QuestionContainerClassic_GetTimerDuration", "QuestionContainerClassic_GetTimerDuration", (void *) targets::QuestionContainerClassic_GetTimerDuration, (void **) &targets::orig_QuestionContainerClassic_GetTimerDuration},
-                {"VIPManager_HasVIPProperty",                 "VIPManager_HasVIPProperty",                 (void *) targets::VIPManager_HasVIPProperty,                 (void **) &targets::orig_VIPManager_HasVIPProperty}
+                {"VIPManager_HasVIPProperty",                 "VIPManager_HasVIPProperty",                 (void *) targets::VIPManager_HasVIPProperty,                 (void **) &targets::orig_VIPManager_HasVIPProperty},
         };
 
         for (auto &r: reqs) {
-            auto relOpt = hooklib::OffsetRegistry::instance().get(r.offsetName);
-            if (!relOpt) {
-                LOGW("Skipping hook %s (missing offset)", r.hookName.c_str());
-                continue;
-            }
-            void *absolute = abs(*relOpt);
-            LOGD("Preparing hook %s at rel 0x%lx -> abs %p", r.hookName.c_str(),
-                 (unsigned long) *relOpt, absolute);
-            auto status = backend.hook(absolute, r.detour, r.original);
+            auto res = hm.install(r);
             LOGI("Hook %s -> %s", r.hookName.c_str(),
-                 status == hooklib::HookInstallStatus::Success ? "OK" : "FAIL");
+                 res.status == hooklib::HookInstallStatus::Success ? "OK" : "FAIL");
         }
 
         LOGI("Bootstrap complete.");

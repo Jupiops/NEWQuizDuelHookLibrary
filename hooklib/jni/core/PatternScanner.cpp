@@ -54,7 +54,6 @@ namespace hooklib {
             }
             if (!match) continue;
 
-            LOGD("PatternScanner: pattern %s matched at %p", spec.name.c_str(), cursor);
             uintptr_t rel = (uintptr_t)(cursor - baseAddr);
             auto elapsed = std::chrono::duration_cast<std::chrono::microseconds>(
                     std::chrono::steady_clock::now() - startTime);

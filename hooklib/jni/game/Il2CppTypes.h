@@ -18,7 +18,7 @@ namespace il2cpp {
         int32_t length;                             ///< Length of string *excluding* the trailing null (which is included in 'chars').
         char16_t data[1];
 
-        using CreateFn = String *(*)(void *thisPtr, const char *str, int start, int len);
+        using CreateFn = String *(*)(String *thisPtr, const char *str, int32_t start, int32_t len);
         using ConcatFn = String *(*)(String *, String *);
     };
 
