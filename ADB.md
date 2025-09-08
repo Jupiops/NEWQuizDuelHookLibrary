@@ -3,7 +3,7 @@
 ## Retrieve the logs from the device
 
 ```shell
-adb -d logcat HOOK_LIBRARY:D *:S
+adb -d logcat HOOKLIB:D *:S
 ```
 
 ## List the installed packages
