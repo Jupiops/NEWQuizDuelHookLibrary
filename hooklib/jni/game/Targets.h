@@ -13,6 +13,12 @@ namespace targets {
 
     bool VIPManager_HasVIPProperty(int32_t property, const void *method);
 
+    bool VIPManager_HasGeneralVIP(const void *method);
+
+    il2cpp::SystemNullableInt
+    CurrencyManager_GetBalance(void *this_, int32_t type, bool ignoreUpdateBlocks,
+                               const void *method);
+
 // Original function pointers:
     extern void
     (*orig_QuestionAnswerButton_Init)(void *, int32_t, il2cpp::String *, void *, const void *);
@@ -20,5 +26,10 @@ namespace targets {
     extern float (*orig_QuestionContainerClassic_GetTimerDuration)(void *, const void *);
 
     extern bool (*orig_VIPManager_HasVIPProperty)(int32_t, const void *);
+
+    extern bool (*orig_VIPManager_HasGeneralVIP)(const void *);
+
+    extern il2cpp::SystemNullableInt
+    (*orig_CurrencyManager_GetBalance)(void *, int32_t, bool, const void *);
 
 } // namespace targets

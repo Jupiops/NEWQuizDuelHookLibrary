@@ -52,10 +52,12 @@ namespace {
         hooklib::HookManager hm(backend, mmap.imageBase());
 
         // Build hook requests referencing offset names
-        std::vector <hooklib::HookRequest> reqs = {
+        std::vector<hooklib::HookRequest> reqs = {
                 {"QuestionAnswerButton_Init",                 "QuestionAnswerButton_Init",                 (void *) targets::QuestionAnswerButton_Init,                 (void **) &targets::orig_QuestionAnswerButton_Init},
                 {"QuestionContainerClassic_GetTimerDuration", "QuestionContainerClassic_GetTimerDuration", (void *) targets::QuestionContainerClassic_GetTimerDuration, (void **) &targets::orig_QuestionContainerClassic_GetTimerDuration},
                 {"VIPManager_HasVIPProperty",                 "VIPManager_HasVIPProperty",                 (void *) targets::VIPManager_HasVIPProperty,                 (void **) &targets::orig_VIPManager_HasVIPProperty},
+                {"VIPManager_HasGeneralVIP",                  "VIPManager_HasGeneralVIP",                  (void *) targets::VIPManager_HasGeneralVIP,                  (void **) &targets::orig_VIPManager_HasGeneralVIP},
+                {"CurrencyManager_GetBalance",                "CurrencyManager_GetBalance",                (void *) targets::CurrencyManager_GetBalance,                (void **) &targets::orig_CurrencyManager_GetBalance},
         };
 
         for (auto &r: reqs) {

@@ -13,6 +13,11 @@ namespace targets {
 
     bool (*orig_VIPManager_HasVIPProperty)(int32_t, const void *) = nullptr;
 
+    bool (*orig_VIPManager_HasGeneralVIP)(const void *) = nullptr;
+
+    il2cpp::SystemNullableInt
+    (*orig_CurrencyManager_GetBalance)(void *, int32_t, bool, const void *) = nullptr;
+
     static il2cpp::String *makeString(const char *utf8) {
         auto absCreate = hooklib::OffsetRegistry::instance().getAbsolute("String_CreateString");
         if (!absCreate) {
@@ -54,6 +59,17 @@ namespace targets {
 
     bool VIPManager_HasVIPProperty(int32_t property, const void *method) {
         return true;
+    }
+
+    bool VIPManager_HasGeneralVIP(const void *method) {
+        return true;
+    }
+
+    il2cpp::SystemNullableInt
+    CurrencyManager_GetBalance(void *self, int32_t type, bool ignoreUpdateBlocks,
+                               const void *method) {
+        il2cpp::SystemNullableInt result = {true, 99999}; // large balance
+        return result;
     }
 
 } // namespace targets
